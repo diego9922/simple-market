@@ -31,13 +31,15 @@ class InventoryRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?Inventory
-    //    {
-    //        return $this->createQueryBuilder('i')
-    //            ->andWhere('i.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findOneById($id): ?array
+    {
+        return $this->createQueryBuilder('i')
+        	->innerJoin('i.Product', 'product')
+        	->addSelect('product')
+            ->andWhere('i.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getArrayResult()[0]
+        ;
+    }
 }

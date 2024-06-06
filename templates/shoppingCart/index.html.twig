@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ShoppingCartController!{% endblock %}
+
+{% block body %}
+<div>
+	<h1>Shopping Cart</h1>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Product</th>
+				<th>Unit Price</th>
+				<th>Quantity</th>
+				<th>Total Item</th>
+				<th>Remove From Cart</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for cartItem in shoppingCart.cartItems %}
+				<tr>
+					<td class="text-capitalize">{{ cartItem.product.name }}</td>
+					<td>${{ cartItem.product.unitPrice }}</td>
+					<td>{{ cartItem.quantity }} {{ cartItem.product.unitMeasurement }}</td>
+					<td>${{ cartItem.product.calculateProductPrice(cartItem.quantity) }}</td>
+					<td>
+						<button class="btn btn-sm btn-outline-danger btn-remove-cart-item" data-url="{{ path('app_shopping_cart_api_remove', {'id': cartItem.id}) }}">
+							Remove
+						</button>
+					</td>
+				</tr>
+			{% else %}
+	            <tr>
+	                <td colspan="5" class="text-center">There are not records</td>
+	            </tr>
+	        {% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td colspan="5">
+					<div class="d-flex justify-content-end">
+						<strong>Total: </strong>
+						${{ shoppingCart.calculateTotal() }}
+					</div>
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+{% endblock %}
+{% block javascripts_footer %}
+	<script src="{{asset('assets/app/js/shoppingCart/index.js')}}"></script>
+{% endblock %}

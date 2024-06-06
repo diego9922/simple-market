@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'discr', type: 'string')]
-#[ORM\DiscriminatorMap(['countable' => CountableProduct::class, 'weighted' => WeightedProduct::class])]
+#[ORM\DiscriminatorMap([CountableProduct::UNIT_MEASUREMENT => CountableProduct::class, WeightedProduct::UNIT_MEASUREMENT => WeightedProduct::class])]
 class Product
 {
 	#[ORM\Id]
@@ -72,4 +72,9 @@ class Product
 
         return $this;
     }
+
+    public function getUnitMeasurement():string
+	{
+		return static::UNIT_MEASUREMENT;
+	}
 }

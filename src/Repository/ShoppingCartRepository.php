@@ -16,6 +16,15 @@ class ShoppingCartRepository extends ServiceEntityRepository
         parent::__construct($registry, ShoppingCart::class);
     }
 
+    public function save(ShoppingCart $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return ShoppingCart[] Returns an array of ShoppingCart objects
     //     */

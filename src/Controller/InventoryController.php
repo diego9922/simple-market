@@ -9,11 +9,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/inventory')]
 class InventoryController extends AbstractController
 {
+
     #[Route('/', name: 'app_inventory_index', methods: ['GET'])]
     public function index(InventoryRepository $inventoryRepository): Response
     {
@@ -77,5 +79,11 @@ class InventoryController extends AbstractController
         }
 
         return $this->redirectToRoute('app_inventory_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/api/list/{id}', name: 'app_inventory_api_list', methods: ['GET'])]
+    public function apiList(InventoryRepository $inventoryRepository, int $id): JsonResponse
+    {
+        return new JsonResponse($inventoryRepository->findOneById($id),200);
     }
 }
