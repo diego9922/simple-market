@@ -1,0 +1,16 @@
+version: '3.3'
+services:
+  simple-market:
+    container_name: simple-market
+    volumes:
+      - ./:/var/www/html/
+      - /var/www/html/vendor/
+      - /var/www/html/var/
+      - /var/www/html/.git/
+    ports:
+      - 80:80
+    build: 
+      dockerfile: .docker/symfony.Dockerfile
+    env_file:
+      - .env
+    network_mode: "host"
