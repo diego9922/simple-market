@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\CountableProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: WeightedProductRepository::class)]
+#[ORM\Entity]
 class WeightedProduct extends Product implements PricingStrategyInterface
 {
 	const UNIT_MEASUREMENT = 'kg';

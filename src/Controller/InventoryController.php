@@ -31,7 +31,9 @@ class InventoryController extends AbstractController
         $form = $this->createForm(InventoryType::class, $inventory);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        $productInventory = $entityManager->getRepository(Inventory::class)->findOneBy(['Product' => $inventory->getProduct()]);
+
+        if ($form->isSubmitted() && $form->isValid() && $productInventory == null) {
             $entityManager->persist($inventory);
             $entityManager->flush();
 
